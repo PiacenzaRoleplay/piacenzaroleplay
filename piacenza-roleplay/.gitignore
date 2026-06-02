@@ -43,4 +43,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-.env*
+
+# allow .env.production for build-time variables in CI/CD
+!.env.production
