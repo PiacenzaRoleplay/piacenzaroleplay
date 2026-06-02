@@ -46,3 +46,4 @@ next-env.d.ts
 
 # allow .env.production for build-time variables in CI/CD
 !.env.production
+.env*
