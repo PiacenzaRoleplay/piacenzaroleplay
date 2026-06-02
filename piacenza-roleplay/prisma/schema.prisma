@@ -1,0 +1,80 @@
+//
+// GENERATOR & DATASOURCE
+//
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+//
+// ENUMS
+//
+
+enum Role {
+  OWNER
+  ADMIN
+  CAPOFAZIONE
+  STAFF
+}
+
+enum Faction {
+  POLIZIA_DI_STATO
+  CARABINIERI
+  VIGILI_DEL_FUOCO
+  ACI
+  GUARDIA_DI_FINANZA
+  ESERCITO_ITALIANO
+  DIREZIONE_INVESTIGATIVA_MAFIA
+}
+
+//
+// MODELS
+//
+
+model User {
+  id           Int      @id @default(autoincrement())
+  robloxName   String   @unique
+  passwordHash String
+  role         Role     @default(STAFF)
+  faction      Faction?
+  createdAt    DateTime @default(now())
+
+  // Relazione inversa dei bandi gestiti
+  bandiGestiti Bando[] @relation("UserHandledBandi")
+}
+
+model Bando {
+  id         Int      @id @default(autoincrement())
+  faction    Faction
+  robloxName String
+  content    String
+  createdAt  DateTime @default(now())
+
+  handledById Int?
+  handledBy   User? @relation("UserHandledBandi", fields: [handledById], references: [id])
+}
+
+model ServerStatus {
+  id        Int      @id @default(autoincrement())
+  status    String // SSU, SSD, IN_VOTAZIONE
+  updatedAt DateTime @updatedAt
+}
+
+model ServerSchedule {
+  id        Int      @id @default(autoincrement())
+  year      Int
+  schedule  String // JSON o testo libero
+  updatedAt DateTime @updatedAt
+}
+
+model ServerLink {
+  id        Int      @id @default(autoincrement())
+  ehCode    String
+  url       String
+  updatedAt DateTime @updatedAt
+}
