@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, Prisma } from '@prisma/client';
 import bcrypt from 'bcrypt';
 
 const prisma = new PrismaClient();
@@ -43,7 +43,9 @@ async function main() {
     "GUARDIA_DI_FINANZA",
     "ESERCITO_ITALIANO",
     "DIREZIONE_INVESTIGATIVA_MAFIA"
-  ];
+  ] as const;
+
+  type Fazione = (typeof fazioni)[number];
 
   for (const f of fazioni) {
     await prisma.user.upsert({
