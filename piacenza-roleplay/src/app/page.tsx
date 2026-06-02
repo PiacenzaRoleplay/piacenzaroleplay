@@ -1,8 +1,9 @@
-export default function HomePage() {
+export default function Home() {
   return (
-    <section>
-      <h1>Piacenza Roleplay</h1>
-      <p>Benvenuto nel server Roblox di roleplay ambientato a Piacenza.</p>
-    </section>
+    <main style={{ padding: "40px", fontFamily: "sans-serif" }}>
+      <h1>Piacenza Roleplay — Online</h1>
+      <p>Il deploy su Vercel funziona correttamente.</p>
+      <p>Ora puoi iniziare a costruire il pannello staff.</p>
+    </main>
   );
 }
